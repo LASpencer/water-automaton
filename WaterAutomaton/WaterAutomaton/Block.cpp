@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "Block.h"
 
-const float Block::compression_factor = 0.01f;
+const float Block::compression_factor = 0.5f;
 
 Block::Block() : m_open(true), m_water(0.f)
 {
@@ -47,12 +47,19 @@ void Block::setWaterLevel(float water)
 	}
 }
 
-void Block::flowWater(float amount)
+void Block::addWater(float amount)
 {
-	if (!m_open) {
-		throw std::logic_error("Water cannot flow through rock blocks");
+	if (m_open) {
+		m_water += amount;
 	}
-	m_water += amount;
+}
+
+void Block::flowWater(float amount, Block& other)
+{
+	if (m_open && other.isOpen()) {
+		m_water -= amount;
+		other.m_water += amount;
+	}
 }
 
 float Block::maxWater(float waterAbove)

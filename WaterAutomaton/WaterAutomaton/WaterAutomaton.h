@@ -6,6 +6,7 @@
 class Block;
 
 class WaterAutomaton {
+public:
 	WaterAutomaton();
 
 	WaterAutomaton(std::vector<std::vector<Block>>& world);

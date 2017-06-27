@@ -17,7 +17,9 @@ public:
 
 	void setWaterLevel(float water);
 
-	void flowWater(float amount);
+	void addWater(float amount);
+
+	void flowWater(float amount, Block& other);
 
 	static const float compression_factor;
 

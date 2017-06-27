@@ -15,8 +15,11 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+	static const size_t blocks_x, blocks_y;
+	static const float block_size, tick_time;
+
 protected:
-	aie::Renderer2D*	m_2dRenderer;
+	aie::Renderer2D*	m_renderer;
 	WaterAutomaton		m_automaton;
 
 	float m_timer;
