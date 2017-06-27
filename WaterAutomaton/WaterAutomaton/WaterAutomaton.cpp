@@ -4,6 +4,10 @@
 
 const float WaterAutomaton::flow_rate = 0.2f;
 
+WaterAutomaton::WaterAutomaton(std::vector<std::vector<Block>>& world) : m_currentWorld(world), m_nextWorld(world)
+{
+}
+
 const std::vector<std::vector<Block>>& WaterAutomaton::getCurrentWorld() const
 {
 	return m_currentWorld;
@@ -38,14 +42,37 @@ void WaterAutomaton::update()
 			}
 			// Flow to sides if more water
 			bool flowLeft, flowRight = false;
+			float leftAmount, rightAmount = 0.f;
 			if (x != 0 && m_currentWorld[x - 1][y].isOpen() && m_currentWorld[x - 1][y].getWaterLevel() < waterLevel) {
 				flowLeft = true;
+				float difference = waterLevel - m_currentWorld[x - 1][y].getWaterLevel();
+				leftAmount = std::min(difference / 2.f, flow_rate);
 			}
 			if (x+1 != m_currentWorld.size() && m_currentWorld[x + 1][y].isOpen() && m_currentWorld[x + 1][y].getWaterLevel() < waterLevel) {
 				flowRight = true;
+				flowLeft = true;
+				float difference = waterLevel - m_currentWorld[x + 1][y].getWaterLevel();
+				rightAmount = std::min(difference / 2.f, flow_rate);
 			}
-
+			if (flowLeft) {
+				waterLevel -= leftAmount;
+				m_nextWorld[x][y].flowWater(-leftAmount);
+				m_nextWorld[x - 1][y].flowWater(leftAmount);
+			}
+			if (flowRight) {
+				waterLevel -= rightAmount;
+				m_nextWorld[x][y].flowWater(-rightAmount);
+				m_nextWorld[x + 1][y].flowWater(rightAmount);
+			}
 			// If more water than max, flow upwards
+			if (y + 1 != m_currentWorld.size() && m_currentWorld[x][y + 1].isOpen()) {
+				float maxWater = Block::maxWater(m_currentWorld[x][y + 1].getWaterLevel());
+				if (waterLevel > maxWater) {
+					float flowUp = waterLevel - maxWater;
+					//TODO
+				}
+			}
+			//TODO evaporate if bottom level/on rock and lower than minimum water level
 		}
 	}
 

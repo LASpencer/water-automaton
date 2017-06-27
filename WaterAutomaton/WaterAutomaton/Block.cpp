@@ -39,6 +39,9 @@ float Block::getWaterLevel() const
 
 void Block::setWaterLevel(float water)
 {
+	if (water < 0.f) {
+		throw std::invalid_argument("Water level must be positive");
+	}
 	if (m_open) {
 		m_water = water;
 	}

@@ -8,6 +8,8 @@ class Block;
 class WaterAutomaton {
 	WaterAutomaton();
 
+	WaterAutomaton(std::vector<std::vector<Block>>& world);
+
 	const std::vector<std::vector<Block>>& getCurrentWorld() const;
 
 	std::vector<std::vector<Block>>& getNextWorld();
