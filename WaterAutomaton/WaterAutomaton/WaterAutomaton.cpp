@@ -69,7 +69,9 @@ void WaterAutomaton::update()
 				float maxWater = Block::maxWater(m_currentWorld[x][y + 1].getWaterLevel());
 				if (waterLevel > maxWater) {
 					float flowUp = waterLevel - maxWater;
-					//TODO
+					waterLevel -= rightAmount;
+					m_nextWorld[x][y].flowWater(-flowUp);
+					m_nextWorld[x][y + 1].flowWater(flowUp);
 				}
 			}
 			//TODO evaporate if bottom level/on rock and lower than minimum water level
