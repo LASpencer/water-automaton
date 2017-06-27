@@ -4,9 +4,9 @@
 #include "Input.h"
 
 const float DemoApp::tick_time = 0.1f;
-const float DemoApp::block_size = 50.f;
-const size_t DemoApp::blocks_x = 20;
-const size_t DemoApp::blocks_y = 10;
+const float DemoApp::block_size = 25.f;
+const size_t DemoApp::blocks_x = 40;
+const size_t DemoApp::blocks_y = 20;
 
 DemoApp::DemoApp()
 {
