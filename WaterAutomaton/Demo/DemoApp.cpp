@@ -22,7 +22,6 @@ bool DemoApp::startup()
 	m_timer = 0.f;
 	m_renderer = new aie::Renderer2D();
 	m_automaton.setWorld(std::vector<std::vector<Block>>(blocks_x, std::vector<Block>(blocks_y)));
-	m_automaton.getNextWorld()[10][9].setWaterLevel(1);
 	return true;
 }
 
