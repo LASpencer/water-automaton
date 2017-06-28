@@ -46,6 +46,7 @@ void DemoApp::update(float deltaTime)
 		size_t mouseBlockY = mouseY / block_size;
 		if (mouseBlockX < blocks_x && mouseBlockY < blocks_y) {
 			Block* mouseBlock = &m_automaton.getNextWorld()[mouseBlockX][mouseBlockY];
+			// TODO move this out to WaterAutomaton, which gets passed indices
 			if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_LEFT)) {
 				// add water
 				if (mouseBlock->isOpen()) {
@@ -58,6 +59,7 @@ void DemoApp::update(float deltaTime)
 			}
 			else if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_RIGHT)) {
 				//remove from block
+				// HACK: This causes a bug?
 				mouseBlock->makeOpen();
 				mouseBlock->setWaterLevel(0);
 			}
