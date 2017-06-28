@@ -45,21 +45,17 @@ void DemoApp::update(float deltaTime)
 		size_t mouseBlockX = mouseX / block_size;
 		size_t mouseBlockY = mouseY / block_size;
 		if (mouseBlockX < blocks_x && mouseBlockY < blocks_y) {
-			Block* mouseBlock = &m_automaton.getNextWorld()[mouseBlockX][mouseBlockY];
 			if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_LEFT)) {
 				// add water
-				if (mouseBlock->isOpen()) {
-					mouseBlock->addWater(1);
-				}
+				m_automaton.addWater(mouseBlockX, mouseBlockY);
 			}
 			else if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_MIDDLE)) {
 				//add rock
-				mouseBlock->makeRock();
+				m_automaton.addRock(mouseBlockX, mouseBlockY);
 			}
 			else if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_RIGHT)) {
 				//remove from block
-				mouseBlock->makeOpen();
-				mouseBlock->setWaterLevel(0);
+				m_automaton.clearBlock(mouseBlockX, mouseBlockY);
 			}
 		}
 	}

@@ -28,6 +28,40 @@ void WaterAutomaton::setWorld(std::vector<std::vector<Block>> world)
 	m_nextWorld = world;
 }
 
+void WaterAutomaton::addWater(size_t x, size_t y, float amount)
+{
+	if (x < m_nextWorld.size() && y < m_nextWorld[x].size()) {
+		m_nextWorld[x][y].addWater(amount);
+	}
+	else {
+		throw std::invalid_argument("Block index out of range");
+	}
+}
+
+void WaterAutomaton::addRock(size_t x, size_t y)
+{
+	if (x < m_nextWorld.size() && y < m_nextWorld[x].size()) {
+		m_nextWorld[x][y].makeRock();
+		m_currentWorld[x][y].makeRock();
+	}
+	else {
+		throw std::invalid_argument("Block index out of range");
+	}
+}
+
+void WaterAutomaton::clearBlock(size_t x, size_t y)
+{
+	if (x < m_nextWorld.size() && y < m_nextWorld[x].size()) {
+		m_nextWorld[x][y].makeOpen();
+		m_currentWorld[x][y].makeOpen();
+		m_nextWorld[x][y].setWaterLevel(0);
+		m_currentWorld[x][y].setWaterLevel(0);
+	}
+	else {
+		throw std::invalid_argument("Block index out of range");
+	}
+}
+
 void WaterAutomaton::update()
 {
 	// Change water in nextworld based on currentworld

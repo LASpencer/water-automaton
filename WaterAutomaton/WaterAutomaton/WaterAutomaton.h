@@ -17,6 +17,12 @@ public:
 
 	void setWorld(std::vector<std::vector<Block>> world);
 
+	void addWater(size_t x, size_t y, float amount = 1.f);
+
+	void addRock(size_t x, size_t y);
+
+	void clearBlock(size_t x, size_t y);
+
 	void update();
 
 	static const float flow_rate;
