@@ -95,7 +95,30 @@ void DemoApp::drawBlock(size_t x, size_t y)
 		//}
 		//else {
 			drawHeight = depth;
-			m_renderer->setRenderColour(0x0000ffff);
+			//TODO use interpolation instead of this ugly thing
+			if (block.getWaterLevel() < 1.2f) {
+				m_renderer->setRenderColour(0x0000ffff);
+			}
+			else if (block.getWaterLevel() < 1.7f) {
+				m_renderer->setRenderColour(0x2000ffff);
+			}
+			else if (block.getWaterLevel() < 2.2f) {
+				m_renderer->setRenderColour(0x4000ffff);
+			} else if (block.getWaterLevel() < 2.7f) {
+				m_renderer->setRenderColour(0x6000ffff);
+			}
+			else if (block.getWaterLevel() < 3.2f) {
+				m_renderer->setRenderColour(0x8000ffff);
+			}
+			else if (block.getWaterLevel() < 3.7f) {
+				m_renderer->setRenderColour(0xA000ffff);
+			}
+			else if (block.getWaterLevel() < 4.2f) {
+				m_renderer->setRenderColour(0xC000ffff);
+			}
+			else {
+				m_renderer->setRenderColour(0xC000D0ff);
+			}
 		//}
 	}
 	else {
