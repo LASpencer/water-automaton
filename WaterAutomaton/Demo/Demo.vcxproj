@@ -70,11 +70,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$SolutionDir)WaterAutomaton;$(SolutionDir)DemoDependencies\Bootstrap\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\SSD USERS\Users\User\Documents\Coding\Water Automata\WaterAutomaton\DemoDependencies\Bootstrap;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)DemoDependencies\Bootstrap;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$SolutionDir)WaterAutomaton;$(SolutionDir)DemoDependencies\Bootstrap\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\SSD USERS\Users\User\Documents\Coding\Water Automata\WaterAutomaton\DemoDependencies\Bootstrap;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)DemoDependencies\Bootstrap;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
