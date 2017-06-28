@@ -45,6 +45,11 @@ void DemoApp::update(float deltaTime)
 		size_t mouseBlockX = mouseX / block_size;
 		size_t mouseBlockY = mouseY / block_size;
 		if (mouseBlockX < blocks_x && mouseBlockY < blocks_y) {
+<<<<<<< HEAD
+=======
+			Block* mouseBlock = &m_automaton.getNextWorld()[mouseBlockX][mouseBlockY];
+			// TODO move this out to WaterAutomaton, which gets passed indices
+>>>>>>> 2360dadb397da8dcf6b0b72796f2b547c1553db8
 			if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_LEFT)) {
 				// add water
 				m_automaton.addWater(mouseBlockX, mouseBlockY);
@@ -55,7 +60,13 @@ void DemoApp::update(float deltaTime)
 			}
 			else if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_RIGHT)) {
 				//remove from block
+<<<<<<< HEAD
 				m_automaton.clearBlock(mouseBlockX, mouseBlockY);
+=======
+				// HACK: This causes a bug? When erasing cell at/around falling water
+				mouseBlock->makeOpen();
+				mouseBlock->setWaterLevel(0);
+>>>>>>> 2360dadb397da8dcf6b0b72796f2b547c1553db8
 			}
 		}
 	}
