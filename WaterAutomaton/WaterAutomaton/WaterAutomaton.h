@@ -25,7 +25,7 @@ public:
 
 	void update();
 
-	static const float flow_rate;
+	static const float flow_rate, min_level;
 
 private:
 	std::vector<std::vector<Block>> m_currentWorld;

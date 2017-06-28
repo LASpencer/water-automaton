@@ -23,5 +23,7 @@ protected:
 	WaterAutomaton		m_automaton;
 
 	float m_timer;
+
+	void drawBlock(size_t x, size_t y);
 };
 

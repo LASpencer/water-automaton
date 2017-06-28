@@ -3,6 +3,7 @@
 #include "Block.h"
 
 const float WaterAutomaton::flow_rate = 0.2f;
+const float WaterAutomaton::min_level = 0.01f;
 
 WaterAutomaton::WaterAutomaton()
 {
@@ -84,19 +85,38 @@ void WaterAutomaton::update()
 			float rightAmount = 0.f;
 			if (x != 0 && m_currentWorld[x - 1][y].isOpen() && m_currentWorld[x - 1][y].getWaterLevel() < waterLevel) {
 				flowLeft = true;
-				float difference = waterLevel - m_currentWorld[x - 1][y].getWaterLevel();
-				leftAmount = std::min(difference / 2.f, flow_rate);
+				
 			}
-			if (x+1 != m_currentWorld.size() && m_currentWorld[x + 1][y].isOpen() && m_currentWorld[x + 1][y].getWaterLevel() < waterLevel) {
+			if (x + 1 != m_currentWorld.size() && m_currentWorld[x + 1][y].isOpen() && m_currentWorld[x + 1][y].getWaterLevel() < waterLevel) {
 				flowRight = true;
-				float difference = waterLevel - m_currentWorld[x + 1][y].getWaterLevel();
-				rightAmount = std::min(difference / 2.f, flow_rate);
 			}
+
 			if (flowLeft) {
+				float difference = waterLevel - m_currentWorld[x - 1][y].getWaterLevel();
+				if(flowRight){
+					leftAmount = difference / 3.f;
+				}
+				else {
+					leftAmount = difference / 2.f;
+				}
+				if (m_currentWorld[x - 1][y].getWaterLevel() < 1.f) {	//limit flow rate if other not full
+					leftAmount = std::min(leftAmount, flow_rate);
+				}
 				waterLevel -= leftAmount;
 				m_nextWorld[x][y].flowWater(leftAmount, m_nextWorld[x - 1][y]);
 			}
 			if (flowRight) {
+				float difference = waterLevel - m_currentWorld[x + 1][y].getWaterLevel();
+				if (flowLeft) {
+					rightAmount = difference / 3.f;
+				}
+				else {
+					rightAmount = difference / 2.f;
+				}
+				//limit flow rate if other not full
+				if (m_currentWorld[x + 1][y].getWaterLevel()<1.f) {
+					rightAmount = std::min(rightAmount, flow_rate);
+				}
 				waterLevel -= rightAmount;
 				m_nextWorld[x][y].flowWater(rightAmount, m_nextWorld[x + 1][y]);
 			}
@@ -110,6 +130,9 @@ void WaterAutomaton::update()
 				}
 			}
 			//TODO evaporate if bottom level/on rock and lower than minimum water level
+			/*if (m_nextWorld[x][y].getWaterLevel() < min_level) {
+				m_nextWorld[x][y].setWaterLevel(0.f);
+			}*/
 		}
 	}
 

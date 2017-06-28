@@ -70,21 +70,40 @@ void DemoApp::draw()
 	m_renderer->begin();
 	for (size_t i = 0; i < blocks_x; ++i) {
 		for (size_t j = 0; j < blocks_y; ++j) {
-			Block b = m_automaton.getCurrentWorld()[i][j];
-			float xPos = (i + 0.5f) * block_size;
-			float depth = 1.f;
-			if (b.isOpen()) {
-				depth = std::min(1.f, b.getWaterLevel());
-				m_renderer->setRenderColour(0x0000ffff);
-			}
-			else {
-				m_renderer->setRenderColour(0x808080ff);
-			}
-			float yPos = (j + 0.5f*depth) * block_size;
-			if (depth > 0.f) {
-				m_renderer->drawBox(xPos, yPos, block_size, depth*block_size);
-			}
+			drawBlock(i, j);
 		}
 	}
 	m_renderer->end();
+}
+
+void DemoApp::drawBlock(size_t x, size_t y)
+{
+	if (x > m_automaton.getCurrentWorld().size() || y > m_automaton.getCurrentWorld()[x].size()) {
+		throw std::invalid_argument("Block index out of bounds");
+	}
+	Block block = m_automaton.getCurrentWorld()[x][y];
+	float drawHeight = 1.f;
+	if (block.isOpen()) {
+		//TODO: Set colour based on total water (not depth)
+		float depth = std::min(1.f, block.getWaterLevel());
+		//if (depth > 0.01f &&
+		//	depth < 1.f &&
+		//	y + 1 != m_automaton.getCurrentWorld()[x].size() &&
+		//	m_automaton.getCurrentWorld()[x][y + 1].getWaterLevel() > 0.01f) {
+		//	// TODO: Set colour based on depth
+		//	m_renderer->setRenderColour(0x90c0ffff);
+		//}
+		//else {
+			drawHeight = depth;
+			m_renderer->setRenderColour(0x0000ffff);
+		//}
+	}
+	else {
+		m_renderer->setRenderColour(0x808080ff);
+	}
+	float xPos = (x + 0.5f) * block_size;
+	float yPos = (y + 0.5f*drawHeight) * block_size;
+	if (drawHeight > 0.f) {
+		m_renderer->drawBox(xPos, yPos, block_size, drawHeight*block_size);
+	}
 }
