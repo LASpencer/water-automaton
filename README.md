@@ -7,5 +7,7 @@ USE
 
 Demo Controls:
 Left Click:		Add 1 unit of water to block
+
 Middle Click:	Place stone in block
+
 Right Click:	Clear block
