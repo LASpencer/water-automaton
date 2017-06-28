@@ -59,7 +59,7 @@ void DemoApp::update(float deltaTime)
 			}
 			else if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_RIGHT)) {
 				//remove from block
-				// HACK: This causes a bug?
+				// HACK: This causes a bug? When erasing cell at/around falling water
 				mouseBlock->makeOpen();
 				mouseBlock->setWaterLevel(0);
 			}
