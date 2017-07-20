@@ -96,30 +96,9 @@ void DemoApp::drawBlock(size_t x, size_t y)
 		//else {
 			drawHeight = depth;
 			//TODO use interpolation instead of this ugly thing
-			if (block.getWaterLevel() < 1.2f) {
-				m_renderer->setRenderColour(0x0000ffff);
-			}
-			else if (block.getWaterLevel() < 1.7f) {
-				m_renderer->setRenderColour(0x2000ffff);
-			}
-			else if (block.getWaterLevel() < 2.2f) {
-				m_renderer->setRenderColour(0x4000ffff);
-			} else if (block.getWaterLevel() < 2.7f) {
-				m_renderer->setRenderColour(0x6000ffff);
-			}
-			else if (block.getWaterLevel() < 3.2f) {
-				m_renderer->setRenderColour(0x8000ffff);
-			}
-			else if (block.getWaterLevel() < 3.7f) {
-				m_renderer->setRenderColour(0xA000ffff);
-			}
-			else if (block.getWaterLevel() < 4.2f) {
-				m_renderer->setRenderColour(0xC000ffff);
-			}
-			else {
-				m_renderer->setRenderColour(0xC000D0ff);
-			}
-		//}
+			// Interpolate hue from 240 to 360, then convert to rgb
+			Colour renderColour = calculatePressureColour(block.getWaterLevel());
+			m_renderer->setRenderColour(renderColour.r, renderColour.g, renderColour.b);
 	}
 	else {
 		m_renderer->setRenderColour(0x808080ff);
@@ -129,4 +108,13 @@ void DemoApp::drawBlock(size_t x, size_t y)
 	if (drawHeight > 0.f) {
 		m_renderer->drawBox(xPos, yPos, block_size, drawHeight*block_size);
 	}
+}
+
+Colour DemoApp::calculatePressureColour(float pressure)
+{
+	Colour pressureColour = { 0,0,0 };
+	float hue = (1.f - (1.f / pressure)); // not actually a hue value
+	pressureColour.b = 1.f - (std::max(0.5f, hue) - 0.5f);
+	pressureColour.r = std::min(0.5f, hue);
+	return pressureColour;
 }

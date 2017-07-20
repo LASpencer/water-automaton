@@ -3,6 +3,11 @@
 #include "Renderer2D.h"
 #include "WaterAutomaton.h"
 
+struct Colour {
+	float r, g, b;
+};
+
+
 class DemoApp : public aie::Application
 {
 public:
@@ -25,5 +30,7 @@ protected:
 	float m_timer;
 
 	void drawBlock(size_t x, size_t y);
+
+	Colour calculatePressureColour(float pressure);
 };
 
